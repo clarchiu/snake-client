@@ -2,6 +2,7 @@
  * Setup User Interface 
  * Specifically, so that we can handle user input via stdin
  */
+const keyMappings = require('./constants');
 
 let connection;
 
@@ -17,28 +18,34 @@ const setupInput = function(conn) {
 
 const handleUserInput = function(key) {
   let cmd = '';
-  switch(key) {
-    case '\u0003': 
-      process.exit();
-    case 'w':
-      cmd = 'up';
-      break;
-    case 'a':
-      cmd = 'left';
-      break;
-    case 's':
-      cmd = 'down';
-      break;
-    case 'd': 
-      cmd = 'right'
-      break;
-    case 'z':
-      connection.write("Say: eat my dust");
-      break;
-  }
-  if (cmd) {
-    connection.write("Move: " + cmd)
-  }
+  if (key === '\u0003') {
+    process.exit();
+  } 
+  if (keyMappings[key]) {
+    connection.write(keyMappings[key]);
+  } 
+  // switch(key) {
+  //   case '\u0003': 
+  //     process.exit();
+  //   case 'w':
+  //     // cmd = 'up';
+  //     // break;
+  //   case 'a':
+  //     // cmd = 'left';
+  //     // break;
+  //   case 's':
+  //     // cmd = 'down';
+  //     // break;
+  //   case 'd': 
+  //     // cmd = 'right'
+  //     // break;
+  //   case 'z':
+  //     connection.write(keyMappings[key]);
+  //     break;
+  // }
+  // if (cmd) {
+  //   connection.write("Move: " + cmd)
+  // }
 }
 
 module.exports = { setupInput };
