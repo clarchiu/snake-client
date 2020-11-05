@@ -19,6 +19,7 @@ const connect = function() {
 
   conn.on('data', (data) => {
     console.log(data);
+    process.exit();
   })
 
   return conn;

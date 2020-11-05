@@ -2,7 +2,11 @@
  * Setup User Interface 
  * Specifically, so that we can handle user input via stdin
  */
-const setupInput = function() {
+
+let connection;
+
+const setupInput = function(conn) {
+  connection = conn;
   const stdin = process.stdin;
   stdin.setRawMode(true);
   stdin.setEncoding('utf8');
@@ -12,8 +16,28 @@ const setupInput = function() {
 }
 
 const handleUserInput = function(key) {
-  if (key === '\u0003') {
-    process.exit();
+  let cmd = '';
+  switch(key) {
+    case '\u0003': 
+      process.exit();
+    case 'w':
+      cmd = 'up';
+      break;
+    case 'a':
+      cmd = 'left';
+      break;
+    case 's':
+      cmd = 'down';
+      break;
+    case 'd': 
+      cmd = 'right'
+      break;
+    case 'z':
+      connection.write("Say: eat my dust");
+      break;
+  }
+  if (cmd) {
+    connection.write("Move: " + cmd)
   }
 }
 
